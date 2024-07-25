@@ -2,3 +2,4 @@
 
 - [x] [Node](./node.h)
 - [x] [Stack](./stack.h) 
+- [ ] [Linked list](./ll.h) 

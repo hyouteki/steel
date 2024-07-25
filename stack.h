@@ -12,7 +12,7 @@ typedef struct Steel_Stack {
 Steel_Stack *Steel_Stack_Init();
 void Steel_Stack_Push(Steel_Stack *stack, void *data, size_t data_size);
 void Steel_Stack_Pop(Steel_Stack *stack);
-void Steel_Stack_Free(Steel_Stack *);
+void Steel_Stack_Free(Steel_Stack *stack);
 
 #define Steel_Stack_Empty(stack) (stack->top == NULL)
 #define Steel_Stack_Peek(stack) (stack->top->data)
