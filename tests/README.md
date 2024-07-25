@@ -1,0 +1,2 @@
+- First give `run.sh` executable permission using `chmod +x run.sh`.
+- Run any test using `./run.sh <test_file_name>`, for example `./run.sh stack_tests.c`.
