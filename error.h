@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define Error(message) ({fprintf(stderr, "error: %s\n", message);\
+#define Steel_Error(message) ({fprintf(stderr, "error: %s\n", message);	\
 			exit(EXIT_FAILURE);})
 
-#define MallocError (Error("memory allocation failed"))
+#define Steel_MallocError (Steel_Error("memory allocation failed"))
 
 #endif // STEEL_ERROR_H_

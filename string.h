@@ -4,22 +4,29 @@
 #include <string.h>
 #include <ctype.h>
 
-void Steel_String_Trim(char **);
-char *Steel_String_FetchUntil(char **, char);
-void Steel_String_RemoveSpecial(char **, int (*)(char));
-int Steel_String_StartsWith(char *, char *);
-void Steel_String_RemoveTrailing(char **, char);
+size_t Steel_String_Trim(char **text);
+char *Steel_String_FetchNEatUntil(char **text, char delim);
+void Steel_String_EatFront(char **text, size_t count);
+void Steel_String_EatFrontIf(char **text, int (*when)(int));
+char *Steel_String_FetchIf(char *text, int (*when)(int));
+int Steel_String_StartsWith(char *text, char *prefix);
+void Steel_String_RemoveTrailing(char **text, char delim);
 
-void Steel_String_Trim(char **text) {
+size_t Steel_String_Trim(char **text) {
 	char *start = *text;
-	while (isspace(*start)) start++;
+	size_t col = 0;
+	while (isspace(*start)) {
+		col++;
+		start++;
+	}
 	char *end = *text + strlen(*text)-1;
     while (end > *text && isspace(*end)) end--;
     *(end+1) = 0;
 	*text = start;
+	return col;
 }
 
-char *Steel_String_FetchUntil(char **text, char delim) {
+char *Steel_String_FetchNEatUntil(char **text, char delim) {
 	char *start = *text;
 	int i = 0;
 	while (*start != delim && i < strlen(*text)) {
@@ -31,10 +38,25 @@ char *Steel_String_FetchUntil(char **text, char delim) {
 	return res;
 }
 
-void Steel_String_RemoveSpecial(char **text, int (*isSpecial)(char)) {
+
+void Steel_String_EatFront(char **text, size_t count) {
+	if (strlen(*text) <= count) **text = 0;
+	else *text += count; 
+}
+
+void Steel_String_EatFrontIf(char **text, int (*when)(int)) {
 	char *start = *text;
-	while (isSpecial(*start)) start++;
+	while (when(*start)) start++;
 	*text = start;
+}
+
+char *Steel_String_FetchIf(char *text, int (*when)(int)) {
+	size_t i = 0, len = strlen(text);
+	while (i < len && when(*(text+i))) i++;
+	char *res = (char *)malloc(sizeof(char)*(i+1));
+	strncpy(res, text, i);
+	res[i] = 0;
+	return res;
 }
 
 int Steel_String_StartsWith(char *text, char *prefix) {
@@ -50,4 +72,4 @@ void Steel_String_RemoveTrailing(char **text, char delim) {
     *(end+1) = 0;
 }
 
-#endif STEEL_STRING_H_
+#endif // STEEL_STRING_H_
