@@ -28,7 +28,7 @@ size_t Steel_String_Trim(char **text) {
 
 char *Steel_String_FetchNEatUntil(char **text, char delim) {
 	char *start = *text;
-	int i = 0;
+	size_t i = 0;
 	while (*start != delim && i < strlen(*text)) {
 		start++;
 		i++;
@@ -61,7 +61,7 @@ char *Steel_String_FetchIf(char *text, int (*when)(int)) {
 
 int Steel_String_StartsWith(char *text, char *prefix) {
 	if (strlen(text) < strlen(prefix)) return 0;
-	for (int i = 0; i < strlen(prefix); ++i)
+	for (size_t i = 0; i < strlen(prefix); ++i)
 		if (text[i] != prefix[i]) return 0;
 	return 1;
 }
