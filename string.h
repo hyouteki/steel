@@ -11,6 +11,7 @@ void Steel_String_EatFrontIf(char **text, int (*when)(int));
 char *Steel_String_FetchIf(char *text, int (*when)(int));
 int Steel_String_StartsWith(char *text, char *prefix);
 void Steel_String_RemoveTrailing(char **text, char delim);
+char *Steel_String_CopyLeadingN(char *text, size_t count);
 
 size_t Steel_String_Trim(char **text) {
 	char *start = *text;
@@ -33,7 +34,7 @@ char *Steel_String_FetchNEatUntil(char **text, char delim) {
 		start++;
 		i++;
 	}
-	char *res = strndup(*text, i);
+	char *res = Steel_String_CopyLeadingN(*text, i);
 	*text = start;
 	return res;
 }
@@ -70,6 +71,17 @@ void Steel_String_RemoveTrailing(char **text, char delim) {
 	char *end = *text + strlen(*text)-1;
     while (end > *text && *end == delim) end--;
     *(end+1) = 0;
+}
+
+char *Steel_String_CopyLeadingN(char *text, size_t count) {
+#ifdef _WIN32
+    char *res = (char *)malloc(sizeof(char)*(count+1));
+	for (size_t i = 0; i < count; ++i) res[i] = text[i];
+	res[count] = 0;
+	return res;
+#else
+    return strndup(text, count);
+#endif
 }
 
 #endif // STEEL_STRING_H_
