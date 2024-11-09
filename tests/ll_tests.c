@@ -1,4 +1,4 @@
-#include "../ll.h"
+#include "../header_only/ll.h"
 
 int main() {
 	int n1 = 1, n2 = 2, n3 = 3, n4 = 4;

@@ -2,8 +2,17 @@
 #define STEEL_NODE_H_
 
 #include <stdlib.h>
-#include "error.h"
-#include "string.h"
+#include <string.h>
+
+// STEEL_ERROR_H_ starts here
+#include <stdio.h>
+#define Steel_Error(fmt, ...)								\
+	do {													\
+		fprintf(stderr, "error: %s\n", fmt, ##__VA_ARGS__);	\
+		exit(EXIT_FAILURE);									\
+	} while (0)
+#define Steel_MallocError Steel_Error("memory allocation failed")
+// STEEL_ERROR_H_ ends here
 
 typedef struct Steel_Node {
 	void *data;
